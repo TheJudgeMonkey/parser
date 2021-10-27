@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
@@ -10,10 +10,9 @@ gem 'bundler', '~> 2.2.3'
 
 group :development do
   gem 'pry', '~> 0.14.1'
-  gem 'rubocop', '~> 1.22', '>= 1.22.3'
+  gem 'rubocop', '~> 1.22', require: false
 end
 
 group :test do
   gem 'rspec', '~> 3.10.0'
 end
-

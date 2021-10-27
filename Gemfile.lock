@@ -48,7 +48,7 @@ DEPENDENCIES
   bundler (~> 2.2.3)
   pry (~> 0.14.1)
   rspec (~> 3.10.0)
-  rubocop (~> 1.22, >= 1.22.3)
+  rubocop (~> 1.22)
 
 RUBY VERSION
    ruby 3.0.0p0
