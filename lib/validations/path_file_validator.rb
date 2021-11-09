@@ -1,15 +1,11 @@
-class PathFileValidator
-  def initialize(log_path)
-    @log_path = log_path
+require_relative 'base_validator'
+
+module Validations
+  class PathFileValidator < BaseValidator
+    ERROR_MESSAGE = "Path can't be blank"
+
+    def validate!
+      raise ValidationError, ERROR_MESSAGE if log_path.nil?
+    end
   end
-
-  ERROR_MESSAGE = "Path can't be blank"
-
-  def validate
-    ERROR_MESSAGE if log_path.nil?
-  end
-
-  private
-
-  attr_reader :log_path
 end

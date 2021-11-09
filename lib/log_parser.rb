@@ -1,7 +1,8 @@
 require_relative 'counter'
 require_relative 'sorter'
 require_relative 'reporter'
-# require_relative 'validator'
+require_relative 'validator'
+require_relative 'validations/validation_error'
 
 class LogParser
   def initialize(log_path)
@@ -10,15 +11,22 @@ class LogParser
   end
 
   def parse
-    log_parser
+    validate!
+    parse_log
     output
+  rescue ValidationError => error
+    warn error.message
   end
 
   private
 
   attr_reader :log_path, :logs
 
-  def log_parser
+  def validate!
+    Validator.new(log_path).validate!
+  end
+
+  def parse_log
     log_path.each do |line|
       path, ip = line.split
       logs[path] = Counter.new if logs[path].nil?

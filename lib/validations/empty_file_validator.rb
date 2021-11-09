@@ -1,15 +1,11 @@
-class EmptyFileValidator
-  def initialize(log_path)
-    @log_path = log_path
+require_relative 'base_validator'
+
+module Validations
+  class EmptyFileValidator < BaseValidator
+    ERROR_MESSAGE = "File can't be empty"
+
+    def validate!
+      raise ValidationError, ERROR_MESSAGE if File.zero?(log_path)
+    end
   end
-
-  ERROR_MESSAGE = "File can't be empty"
-
-  def validate
-    ERROR_MESSAGE if File.zero?(file_path)
-  end
-
-  private
-
-  attr_reader :log_path
 end
