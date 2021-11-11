@@ -1,3 +1,4 @@
+[![Ruby](https://github.com/TheJudgeMonkey/parser/actions/workflows/ruby.yml/badge.svg)](https://github.com/TheJudgeMonkey/parser/actions/workflows/ruby.yml)
 # Log Parser
 
 ### About
@@ -18,18 +19,18 @@ The test is as follows:
 
 Write a ruby script that:
 
-- a. Receives a log as argument (webserver.log is provided) *e.g.:*
+a. Receives a log as argument (webserver.log is provided) *e.g.:*
 ```bash
 ./parser.rb webserver.log
 ```
 
-- b. Returns the following:
-  - list of webpages with most page views ordered from most pages views to less page views *e.g.:*
+b. Returns the following:
+- list of webpages with most page views ordered from most pages views to less page views *e.g.:*
 ```bash
 /home 90 visits 
 /index 80 visits etc... 
 ```
-  - list of webpages with most
+- list of webpages with most
 unique page views also ordered *e.g.:*
 ```bash
 /about/2 8 unique views
