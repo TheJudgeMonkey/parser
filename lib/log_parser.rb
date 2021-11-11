@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'counter'
 require_relative 'sorter'
 require_relative 'reporter'
@@ -6,7 +8,7 @@ require_relative 'validations/validation_error'
 
 class LogParser
   def initialize(log_path)
-    @log_path = File.open(log_path, 'r')
+    @log_path = log_path
     @logs = {}
   end
 
@@ -14,8 +16,8 @@ class LogParser
     validate!
     parse_log
     output
-  rescue ValidationError => error
-    warn error.message
+  rescue ValidationError => e
+    warn e.message
   end
 
   private
@@ -27,7 +29,7 @@ class LogParser
   end
 
   def parse_log
-    log_path.each do |line|
+    File.open(log_path, 'r').each do |line|
       path, ip = line.split
       logs[path] = Counter.new if logs[path].nil?
       logs[path].add_ip(ip)
@@ -46,10 +48,10 @@ class LogParser
 
   def output
     puts '=' * 30
-    puts " Most page views:"
+    puts ' Most page views:'
     print_most_page_views
     puts '-' * 30
-    puts " Most unique page views:"
+    puts ' Most unique page views:'
     print_unique_page_views
     puts '=' * 30
   end

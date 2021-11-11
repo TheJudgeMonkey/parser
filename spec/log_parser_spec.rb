@@ -1,24 +1,61 @@
-require_relative './spec_helper'
-require_relative ".././lib/log_parser"
+# frozen_string_literal: true
 
-RSpec.describe LogParser do
-  let(:log_path) { 'spec/webserver_test.log' }
+require 'spec_helper'
+require_relative '.././lib/log_parser'
+require_relative '.././lib/validations/validation_error'
+require_relative '.././lib/validations/format_file_validator'
+
+describe LogParser do
   subject { described_class.new(log_path) }
 
-  describe 'Parse all' do
-    before { subject.parse }
+  let(:log_path) { 'spec/fixtures/valid_webserver.log' }
 
-    let(:expected_results) do
-      {
-        '/home'   => ['111.222.333.444'],
-        '/index' => ['111.111.111.111', '111.222.333.444'],
-        '/about'   => ['222.222.222.222', '222.222.222.222', '222.222.222.222'],
-        '/about/2' => ['333.333.333.333']
-      }
+  describe '#parse' do
+    context 'when there were no errors'
+    let(:expected_result) do
+      <<~HEREDOC
+        ==============================
+         Most page views:
+        * /about - 3 views
+        * /index - 2 views
+        * /home - 1 views
+        * /about/2 - 1 views
+        ------------------------------
+         Most unique page views:
+        * /index - 2 views
+        * /home - 1 views
+        * /about - 1 views
+        * /about/2 - 1 views
+        ==============================
+      HEREDOC
     end
 
-    it "parses the data correctly" do
-      expect(subject.logs).to eq(expected_results)
+    it 'show the data correctly' do
+      expect { subject.parse }.to output(expected_result).to_stdout
+    end
+
+    context 'when path is empty' do
+      let(:log_path) { nil }
+
+      it 'show error message' do
+        expect { subject.parse }.to output("Path can't be empty\n").to_stderr
+      end
+    end
+
+    context 'when file is empty' do
+      let(:log_path) { 'spec/fixtures/empty_file.log' }
+
+      it 'show error message' do
+        expect { subject.parse }.to output("File can't be empty\n").to_stderr
+      end
+    end
+
+    context 'when file is not a .log' do
+      let(:log_path) { 'spec/fixtures/invalid_format.js' }
+
+      it 'show error message' do
+        expect { subject.parse }.to output("File format must be .log\n").to_stderr
+      end
     end
   end
 end
