@@ -12,7 +12,7 @@ describe Validations::EmptyFileValidator do
       let(:log_path) { 'spec/fixtures/empty_file.log' }
 
       it 'raise error' do
-        expect { subject.validate! }.to raise_error(ValidationError, "File can't be empty")
+        expect { validator.validate! }.to raise_error(ValidationError, "File can't be empty")
       end
     end
 
@@ -20,7 +20,7 @@ describe Validations::EmptyFileValidator do
       let(:log_path) { 'spec/fixtures/valid_webserver.log' }
 
       it 'raise nil' do
-        expect { subject.validate! }.not_to raise_error
+        expect { validator.validate! }.not_to raise_error
       end
     end
   end

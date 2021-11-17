@@ -12,7 +12,7 @@ describe Validations::FormatFileValidator do
       let(:log_path) { 'spec/validations/format_file_validator_spec.rb' }
 
       it 'raise error' do
-        expect { subject.validate! }.to raise_error(ValidationError, 'File format must be .log')
+        expect { validator.validate! }.to raise_error(ValidationError, 'File format must be .log')
       end
     end
 
@@ -20,7 +20,7 @@ describe Validations::FormatFileValidator do
       let(:log_path) { 'spec/fixtures/valid_webserver.log' }
 
       it 'raise nil' do
-        expect { subject.validate! }.not_to raise_error
+        expect { validator.validate! }.not_to raise_error
       end
     end
   end
