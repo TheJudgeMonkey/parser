@@ -31,4 +31,18 @@ describe Sorter do
       expect(subject.sort_most_page_views).to eq expected_result
     end
   end
+
+  describe '#sort_unique_page_views' do
+    let(:expected_result) do
+      [
+        ['/index', counter2],
+        ['/home', counter3],
+        ['/about', counter1]
+      ]
+    end
+
+    it 'show most page views' do
+      expect(subject.sort_unique_page_views).to eq expected_result
+    end
+  end
 end
