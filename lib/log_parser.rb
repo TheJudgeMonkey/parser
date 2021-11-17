@@ -29,20 +29,24 @@ class LogParser
   end
 
   def parse_log
-    File.open(log_path, 'r').each do |line|
+    File.foreach(log_path) do |line|
       path, ip = line.split
       logs[path] = Counter.new if logs[path].nil?
       logs[path].add_ip(ip)
     end
   end
 
+  def sorter
+    @sorter ||= Sorter.new(logs)
+  end
+
   def print_most_page_views
-    sorted_views = Sorter.new(logs).sort_most_page_views
+    sorted_views = sorter.sort_most_page_views
     Reporter.new(sorted_views).print_most_page_views
   end
 
   def print_unique_page_views
-    sorted_views = Sorter.new(logs).sort_unique_page_views
+    sorted_views = sorter.sort_unique_page_views
     Reporter.new(sorted_views).print_unique_page_views
   end
 
