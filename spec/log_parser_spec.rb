@@ -11,27 +11,28 @@ describe LogParser do
   let(:log_path) { 'spec/fixtures/valid_webserver.log' }
 
   describe '#parse' do
-    context 'when there were no errors'
-    let(:expected_result) do
-      <<~HEREDOC
-        ==============================
-         Most page views:
-        * /about - 3 views
-        * /index - 2 views
-        * /home - 1 views
-        * /about/2 - 1 views
-        ------------------------------
-         Most unique page views:
-        * /index - 2 views
-        * /home - 1 views
-        * /about - 1 views
-        * /about/2 - 1 views
-        ==============================
-      HEREDOC
-    end
+    context 'when there were no errors' do
+      let(:expected_result) do
+        <<~HEREDOC
+          ==============================
+           Most page views:
+          * /about - 3 views
+          * /index - 2 views
+          * /home - 1 views
+          * /about/2 - 1 views
+          ------------------------------
+           Most unique page views:
+          * /index - 2 views
+          * /home - 1 views
+          * /about - 1 views
+          * /about/2 - 1 views
+          ==============================
+        HEREDOC
+      end
 
-    it 'show the data correctly' do
-      expect { subject.parse }.to output(expected_result).to_stdout
+      it 'show the data correctly' do
+        expect { subject.parse }.to output(expected_result).to_stdout
+      end
     end
 
     context 'when path is empty' do
